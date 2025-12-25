@@ -156,11 +156,21 @@ function logout(){
 
 /* ===== SALDO ===== */
 function loadSaldo(){
-  fetch(API_URL+"?action=getSaldo")
-    .then(r=>r.json())
-    .then(res=>{
-      saldoText.innerText="Rp "+res.saldo.toLocaleString("id-ID");
-    });
+   fetch(API_URL,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({
+      action:"getSaldo"
+    })
+  })
+  .then(r=>r.json())
+  .then(res=>{
+    saldoText.innerText =
+      "Rp " + Number(res.saldo).toLocaleString("id-ID");
+  })
+  .catch(()=>{
+    saldoText.innerText = "Gagal load saldo";
+  });
 }
 
 /* ===== SUBMIT ===== */
@@ -198,3 +208,4 @@ window.onload=cekLogin;
 
 </body>
 </html>
+
